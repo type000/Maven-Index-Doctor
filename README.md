@@ -36,14 +36,9 @@ IntelliJ IDEA 插件，用于诊断和修复 Maven 索引问题。
 
 ## 发布到 JetBrains Marketplace
 
-发布前需要在 CI 或本机环境变量中提供：
+完整的首次上传、签名、Token、OpenSSL 和 GitHub Actions 配置见 [`docs/PUBLISHING.md`](docs/PUBLISHING.md)。
 
-- `PUBLISH_TOKEN`
-- `CERTIFICATE_CHAIN`
-- `PRIVATE_KEY`
-- `PRIVATE_KEY_PASSWORD`
-
-然后执行：
+配置好凭据后可以执行：
 
 ```bash
 ./gradlew signPlugin publishPlugin
