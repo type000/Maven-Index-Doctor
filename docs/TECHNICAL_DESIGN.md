@@ -4,7 +4,7 @@
 
 Maven Index Doctor 是 IntelliJ IDEA 插件，负责诊断和修复 IDEA Maven 索引层的问题。它不替代 Maven 的依赖解析，不修改 Maven POM，也不处理依赖冲突。
 
-首个可发布版本优先覆盖本机文件系统诊断和可逆清理；网络抓取、配置漂移监听和自动重试放到后续迭代。
+首个可发布版本覆盖本机文件系统诊断、IDEA Maven 索引一致性检查、可逆清理、配置变化监听和下载重试入口。
 
 ## 2. 用户流程
 
@@ -27,12 +27,14 @@ Maven Index Doctor 是 IntelliJ IDEA 插件，负责诊断和修复 IDEA Maven �
 - `MavenDiagnosticsService`：编排扫描器，负责生成诊断报告。
 - `LastUpdatedScanner`：扫描 `~/.m2/repository` 下的 `.lastUpdated` 文件。
 - `MavenIndexHealthScanner`：检查 IDEA system 目录下的 `maven/indices` 是否存在、可读、是否包含零字节文件。
-- `MavenIndexResetService`（后续）：备份、清理和恢复索引目录。
+- `MavenRepairService`：清理失败标记、刷新/重建索引以及备份恢复。
+- `MavenIndexFileOperations`：受路径约束的索引备份、清理和恢复。
 
 ### UI
 
 - `MavenIndexDoctorToolWindowFactory`：创建 Tool Window。
-- `MavenIndexDoctorPanel`（后续）：展示扫描状态、问题列表和操作按钮。
+- `MavenIndexDoctorPanel`：展示扫描状态、问题列表和操作按钮。
+- `MavenHealthMonitor`：监听失败标记、索引文件和 `settings.xml` 变化。
 
 UI 不直接访问文件系统；所有耗时操作通过应用服务执行，结果再回到 EDT 更新组件。
 
@@ -54,8 +56,6 @@ UI 不直接访问文件系统；所有耗时操作通过应用服务执行，�
 
 ## 6. 后续迭代
 
-1. 清理指定/全部 `.lastUpdated`。
-2. 索引目录备份、清理、恢复和 Maven `updateIndex` 调用。
-3. 本地仓库与索引内容一致性检查。
-4. `settings.xml`、镜像、代理检查。
-5. 文件变化监听和通知栏预警。
+1. 完善 Marketplace 截图、隐私说明和发布信息。
+2. 增加不同 IDEA 版本的 Plugin Verifier 矩阵。
+3. 根据真实用户反馈优化索引异常规则和界面交互。

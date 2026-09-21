@@ -13,7 +13,10 @@
     <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/best-practices-for-listing.html#plugin-description -->
     <description><![CDATA[
-        Diagnose and repair IntelliJ IDEA Maven index problems without manually deleting cache directories.
+        Diagnose and repair IntelliJ IDEA Maven index problems without manually deleting cache directories.<br><br>
+        Maven Index Doctor detects failed downloads, unhealthy index files, repository/index inconsistencies,
+        mirror and proxy configuration problems, and Maven offline mode. It can retry downloads, refresh or rebuild
+        indexes, and safely reset indexes with a restorable backup.
         ]]></description>
 
     <!-- Product and plugin compatibility requirements.
@@ -29,6 +32,8 @@
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="MavenIndexDoctor" factoryClass="io.github.mavenindexdoctor.ui.MavenIndexDoctorToolWindowFactory"
                     icon="AllIcons.Toolwindows.ToolWindowPalette"/>
+        <postStartupActivity implementation="io.github.mavenindexdoctor.monitor.MavenIndexDoctorStartupActivity"/>
+        <notificationGroup id="Maven Index Doctor" displayType="BALLOON" isLogByDefault="true"/>
     </extensions>
 
 </idea-plugin>
